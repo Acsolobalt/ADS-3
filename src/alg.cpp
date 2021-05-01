@@ -19,20 +19,20 @@ return 1;
 
 std::string infx2pstfx(std::string inf) {
 TStack<char> mstack;
-string result = "";
+std::string result = "";
 for (int i = 0; i < inf.size(); ++i) {
-if (inf[i] > '9' || inf[i] < '0' || (inf[i] != '(' && inf[i] != ')' && inf[i] != '+' && inf[i] != '-' && inf[i] != '*' && inf[i] != '/')) {
+if ((inf[i] <= '9' && inf[i] >= '0') || (inf[i] >= '(' && inf[i] <= '+') || inf[i] == '-' || inf[i] == '/') {
 if (inf[i] <= '9' && inf[i] >= '0') {
 result = result + inf[i] + ' ';
-} else {
+continue;
+}
 if (countPriory(inf[i]) == 1) {
 while (mstack.get() != '(') {
 result = result + mstack.get() + ' ';
 mstack.pop();
 }
 mstack.pop();
-}
-else {
+} else {
 if (mstack.isEmpty() || countPriory(inf[i]) == 0 || countPriory(inf[i]) > countPriory(mstack.get())) {
 mstack.push(inf[i]);
 } else {
@@ -63,8 +63,7 @@ continue;
 }
 if (pst[i] <= '9' && pst[i] >= '0') {
 mstack.push(pst[i]);
-}
-else {
+} else {
 switch (pst[i]) {
 case '+':
 a = mstack.get() - '0';
