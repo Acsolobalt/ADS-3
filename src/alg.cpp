@@ -2,41 +2,47 @@
 #include <string>
 #include "tstack.h"
 
-int countPriory(char a) {
-if (a == '+' || a == '-') {
+int Priory(char a) {
+switch(a) {
+case '+':
 return 2;
-}
-if (a == '*' || a == '/') {
+case '-':
+return 2;
+case '*':
 return 3;
-}
-if (a == '(') {
+case '/':
+return 3;
+case '(':
 return 0;
-}
-if (a == ')') {
+case ')':
 return 1;
-}
+default:
+return -1;
 }
 
 std::string infx2pstfx(std::string inf) {
 TStack<char> mstack;
-std::string result = "";
+std::string result;
 for (int i = 0; i < inf.size(); ++i) {
-if ((inf[i] <= '9' && inf[i] >= '0') || (inf[i] >= '(' && inf[i] <= '+') || inf[i] == '-' || inf[i] == '/') {
+if ((inf[i] <= '9' && inf[i] >= '0') || Priory(inf[i]) != -1) {
 if (inf[i] <= '9' && inf[i] >= '0') {
-result = result + inf[i] + ' ';
+result.push_back(inf[i]);
+result.push_back(' ');
 continue;
 }
-if (countPriory(inf[i]) == 1) {
+if (Priory(inf[i]) == 1) {
 while (mstack.get() != '(') {
-result = result + mstack.get() + ' ';
+result.push_back(mstack.get())
+result.push_back(' ');
 mstack.pop();
 }
 mstack.pop();
 } else {
-if (mstack.isEmpty() || countPriory(inf[i]) == 0 || countPriory(inf[i]) > countPriory(mstack.get())) {
+if (mstack.isEmpty() || Priory(inf[i]) == 0 || Priory(inf[i]) > Priory(mstack.get())) {
 mstack.push(inf[i]);
 } else {
-result = result + mstack.get() + ' ';
+result.push_back(mstack.get())
+result.push_back(' ');
 mstack.pop();
 mstack.push(inf[i]);
 }
@@ -45,12 +51,12 @@ mstack.push(inf[i]);
 }
 }
 while (!mstack.isEmpty()) {
-result = result + mstack.get() + ' ';
+result.push_back(mstack.get())
+result.push_back(' ');
 mstack.pop();
 }
 result.erase(result.end() - 1);
 return result;
-return std::string("");
 }
 
 int eval(std::string pst) {
