@@ -21,19 +21,19 @@ return -1;
 }
 
 std::string infx2pstfx(std::string inf) {
-std::string result;
+ std::string pfx;
 TStack<char> mstk;
 for (int i = 0; i < inf.size(); ++i) {
 if ((inf[i] <= '9' && inf[i] >= '0') || Pr(inf[i]) != -1) {
 if (inf[i] <= '9' && inf[i] >= '0') {
-result.push_back(inf[i]);
-result.push_back(' ');
+pfx.push_back(inf[i]);
+pfx.push_back(' ');
 continue;
 }
 if (Pr(inf[i]) == 1) {
 while (mstk.get() != '(') {
-result.push_back(mstk.get())
-result.push_back(' ');
+pfx.push_back(mstk.get())
+pfx.push_back(' ');
 mstk.pop();
 }
 mstk.pop();
@@ -41,8 +41,8 @@ mstk.pop();
 if (mstk.isEmpty() || Pr(inf[i]) == 0 || Pr(inf[i]) > Pr(mstk.get())) {
 mstk.push(inf[i]);
 } else {
-result.push_back(mstk.get())
-result.push_back(' ');
+pfx.push_back(mstk.get())
+pfx.push_back(' ');
 mstk.pop();
 mstk.push(inf[i]);
 }
@@ -51,12 +51,12 @@ mstk.push(inf[i]);
 }
 }
 while (!mstk.isEmpty()) {
-result.push_back(mstk.get())
-result.push_back(' ');
+pfx.push_back(mstk.get())
+pfx.push_back(' ');
 mstk.pop();
 }
-result.erase(result.end() - 1);
-return result;
+pfx.erase(pfx.end() - 1);
+return pfx;
 }
 
 int eval(std::string pst) {
