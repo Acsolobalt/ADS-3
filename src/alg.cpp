@@ -21,8 +21,8 @@ return -1;
 }
 
 std::string infx2pstfx(std::string inf) {
-TStack<char> mstack;
 std::string result;
+TStack<char> mstk;
 for (int i = 0; i < inf.size(); ++i) {
 if ((inf[i] <= '9' && inf[i] >= '0') || Priory(inf[i]) != -1) {
 if (inf[i] <= '9' && inf[i] >= '0') {
@@ -31,29 +31,29 @@ result.push_back(' ');
 continue;
 }
 if (Priory(inf[i]) == 1) {
-while (mstack.get() != '(') {
-result.push_back(mstack.get())
+while (mstk.get() != '(') {
+result.push_back(mstk.get())
 result.push_back(' ');
-mstack.pop();
+mstk.pop();
 }
-mstack.pop();
+mstk.pop();
 } else {
-if (mstack.isEmpty() || Priory(inf[i]) == 0 || Priory(inf[i]) > Priory(mstack.get())) {
-mstack.push(inf[i]);
+if (mstk.isEmpty() || Priory(inf[i]) == 0 || Priory(inf[i]) > Priory(mstk.get())) {
+mstk.push(inf[i]);
 } else {
-result.push_back(mstack.get())
+result.push_back(mstk.get())
 result.push_back(' ');
-mstack.pop();
-mstack.push(inf[i]);
+mstk.pop();
+mstk.push(inf[i]);
 }
 }
 }
 }
 }
-while (!mstack.isEmpty()) {
-result.push_back(mstack.get())
+while (!mstk.isEmpty()) {
+result.push_back(mstk.get())
 result.push_back(' ');
-mstack.pop();
+mstk.pop();
 }
 result.erase(result.end() - 1);
 return result;
