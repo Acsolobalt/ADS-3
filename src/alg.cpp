@@ -19,6 +19,7 @@ return 1;
 default:
 return -1;
 }
+}
 
 std::string infx2pstfx(std::string inf) {
 std::string pfx;
